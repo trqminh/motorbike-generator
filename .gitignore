@@ -1,0 +1,14 @@
+.idea/
+*pyc
+.ipynb_checkpoints/
+client/
+debug/
+image/
+new_gen_img/
+trained_model/
+new_dis_model.pth
+new_gen_img.zip
+new_generator_model.pth
+submit.zip
+train.ipynb
+debug_normal
