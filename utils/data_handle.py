@@ -8,8 +8,11 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def get_data_loader(data_dir, image_size, batch_size, workers):
     dataset = datasets.ImageFolder(root=data_dir, transform=transforms.Compose([
-        transforms.Resize(image_size),
-        transforms.CenterCrop(image_size),
+        # transforms.Resize((image_size, image_size)),
+        # transforms.CenterCrop(image_size),
+        # transforms.ToTensor(),
+        # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.RandomHorizontalFlip(p=0.5),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ]))

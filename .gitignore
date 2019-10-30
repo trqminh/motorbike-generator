@@ -12,3 +12,6 @@ new_generator_model.pth
 submit.zip
 train.ipynb
 debug_normal
+detection_yolov3.pb
+clean_data/
+not_sure_if_clean_img/

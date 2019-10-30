@@ -29,11 +29,12 @@ def main():
     nc = 3
     device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
     
-    netG = Generator(ngpu, nz, ngf, nc).to(device)
+    netG = Generator(nz=nz, nfilt=ngf, num_classes=3).to(device)
     # netG.load_state_dict(torch.load('./new_generator_model.pth'))
-    netG.load_state_dict(torch.load('./debug/gen40.pth'))
+    netG.load_state_dict(torch.load('./debug/gen1560.pth'))
     
     latent_vector_set = torch.randn(10000, nz, 1, 1)
+    #latent_vector_set = torch.randn(30, nz, 1, 1)
     latent_vector_dataset = LatentVectorDataset(latent_vector_set)
     
     data_loader = DataLoader(dataset=latent_vector_dataset, batch_size=64, num_workers=4)
@@ -41,7 +42,9 @@ def main():
     num_img = 0
     for x in data_loader:
         x = x.to(device)
-        imgs = netG(x)
+        b_size = x.size(0)
+        classes = torch.empty(b_size, dtype=torch.long).random_(1).to(device)
+        imgs = netG((x, classes))
         imgs = imgs.cpu().detach().numpy()
         imgs = np.clip(imgs, 0.0, 1.0)
         imgs = np.transpose(imgs, (0, 2, 3, 1))
